@@ -2,9 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:untitled1/second.dart';
 import 'adminbuttons.dart';
 
-class AdminLoginPage extends StatelessWidget {
+class AdminLoginPage extends StatefulWidget {
+  @override
+  _AdminLoginPageState createState() => _AdminLoginPageState();
+}
+
+class _AdminLoginPageState extends State<AdminLoginPage> {
   final TextEditingController adminIdController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool _isCorrect = false;
+
+  void _checkCredentials() {
+    if (adminIdController.text == "admin" &&
+        passwordController.text == "password") {
+      setState(() {
+        _isCorrect = true;
+      });
+    } else {
+      setState(() {
+        _isCorrect = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +64,28 @@ class AdminLoginPage extends StatelessWidget {
                   SizedBox(height: 32),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AdminPage()));
+                      _checkCredentials();
+                      if (_isCorrect) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AdminPage()),
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text("Incorrect Credentials"),
+                            content: Text(
+                                "The admin ID or password you entered is incorrect. Please try again."),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: Text("OK"),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
                     },
                     child: Text("Login"),
                   ),

@@ -1,94 +1,145 @@
 import 'package:flutter/material.dart';
 
-class AdminProfilePage extends StatefulWidget {
+class ProfilePage extends StatefulWidget {
   @override
-  _AdminProfilePageState createState() => _AdminProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _AdminProfilePageState extends State<AdminProfilePage> {
-  String _name = 'John Doe';
-  String _password = '********';
-  final _adminId = 'A001';
+class _ProfilePageState extends State<ProfilePage> {
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the text fields with some default values
+    _nameController.text = 'John Doe';
+    _passwordController.text = 'password123';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Admin Profile'),
+        title: Text('Profile'),
+        centerTitle: true,
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            GestureDetector(
+              onTap: () {
+                // TODO: Implement changing profile photo
+              },
+              child: CircleAvatar(
+                radius: 75,
+                backgroundImage: AssetImage('assets/profile.png'),
+              ),
+            ),
+            SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage: AssetImage('assets/profile_photo.jpg'),
-                ),
-                IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    // TODO: implement photo editing logic
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Change Name'),
+                          content: TextField(
+                            controller: _nameController,
+                            decoration:
+                                InputDecoration(hintText: 'Enter new name'),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {});
+                                Navigator.pop(context);
+                              },
+                              child: Text('Save'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
+                  child: Row(
+                    children: [
+                      Text('Name: '),
+                      Text(
+                        _nameController.text,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Icon(Icons.edit),
+                    ],
+                  ),
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
-            _buildEditableField('Name', _name),
-            SizedBox(height: 10.0),
-            _buildEditableField('Password', _password),
-            SizedBox(height: 10.0),
-            _buildNonEditableField('Admin ID', _adminId),
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                // TODO: implement save logic
-              },
-              child: Text('Save'),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Change Password'),
+                          content: TextField(
+                            controller: _passwordController,
+                            obscureText: true,
+                            decoration:
+                                InputDecoration(hintText: 'Enter new password'),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                setState(() {});
+                                Navigator.pop(context);
+                              },
+                              child: Text('Save'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      Text('Password: '),
+                      Text(
+                        _passwordController.text,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Icon(Icons.edit),
+                    ],
+                  ),
+                ),
+              ],
             ),
+            SizedBox(height: 20),
+            Text('Admin ID: 123456',
+                style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildEditableField(String label, String value) {
-    return Row(
-      children: [
-        Text(label, style: TextStyle(fontSize: 18.0)),
-        SizedBox(width: 10.0),
-        Expanded(
-          child: TextFormField(
-            initialValue: value,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-            ),
-            onChanged: (newValue) {
-              setState(() {
-                if (label == 'Name') {
-                  _name = newValue;
-                } else if (label == 'Password') {
-                  _password = newValue;
-                }
-              });
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildNonEditableField(String label, String value) {
-    return Row(
-      children: [
-        Text(label, style: TextStyle(fontSize: 18.0)),
-        SizedBox(width: 10.0),
-        Text(value,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-      ],
     );
   }
 }
