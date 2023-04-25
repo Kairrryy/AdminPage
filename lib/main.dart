@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'admin_profile.dart';
+import 'allbooks.dart';
 import 'loginpage.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blue,
       ),
-      home: AdminLoginPage(),
+      home: RandomBooksPage(),
     );
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:untitled1/addbooks.dart';
 import 'package:untitled1/sidebuttons.dart';
 
+import 'allbooks.dart';
+
 class AdminPage extends StatefulWidget {
   const AdminPage({Key? key}) : super(key: key);
 
@@ -46,7 +48,13 @@ class _AdminPageState extends State<AdminPage> {
                   SideButtons(
                     icon: Icons.book,
                     text: 'All Books',
-                    onTap: () {},
+                    onTap: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => BookDetailsPage()),
+                      // );
+                    },
                   ),
                   SideButtons(
                     icon: Icons.add,
