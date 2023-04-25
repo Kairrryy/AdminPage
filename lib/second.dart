@@ -49,11 +49,11 @@ class _AdminPageState extends State<AdminPage> {
                     icon: Icons.book,
                     text: 'All Books',
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => BookDetailsPage()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RandomBooksPage()),
+                      );
                     },
                   ),
                   SideButtons(
